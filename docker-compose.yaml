@@ -17,6 +17,4 @@ services:
     image: mysql:8.0
     environment:
       - MYSQL_DATABASE=nodejs
-      - MYSQL_USER=thoe
-      - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password

@@ -1,14 +1,13 @@
-const PORT = 8080;
+const PORT = 5000;
 const HOST = '0.0.0.0';
 
 const express = require('express');
-const app = express();
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const db = mysql.createConnection({
-    host: "mysql_server",
-    user: 'thoe',
+    host: "host.docker.internal",
+    user: 'root',
     password: 'password',
     database: 'nodejs'
   });
@@ -39,6 +38,8 @@ function get_hit_count() {
 
      });
 }
+
+const app = express();
 
 app.get('/', (req, res) => {
   res.send('Hello, welcome to my sample node.js app. I have been seen ' + get_hit_count()+ ' times');
