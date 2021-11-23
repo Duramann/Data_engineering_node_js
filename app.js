@@ -18,7 +18,11 @@ db.connect(function(err) {
     if (err) throw err;
     console.log("Connecté à la base de données MySQL!");
 
-    db.query("CREATE TABLE IF NOT EXISTS counter (counts INT(100) NOT NULL)", function (err, result){
+    db.query("CREATE TABLE IF NOT EXISTS counter (count INT(100) NOT NULL)", function (err, result){
+        if (err) throw err;
+    });
+
+    db.query("INSERT INTO counter VALUES (0);", function (err, result){
         if (err) throw err;
     });
  });
@@ -27,11 +31,13 @@ function get_hit_count() {
     db.connect(function(err) {
         if (err) throw err;
     
-        db.query("UPDATE counter SET counts = counts + 1 ", function (err, result){
+        db.query("UPDATE counter SET count = count + 1 ", function (err, result){
             if (err) throw err;
         });
 
-        db.query("SELECT counts FROM counter ", function (err, result){
+        console.log("OK!")
+
+        db.query("SELECT * FROM counter ", function (err, result){
             if (err) throw err;
             console.log(result)
         });
@@ -42,7 +48,8 @@ function get_hit_count() {
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello, welcome to my sample node.js app. I have been seen ' + get_hit_count()+ ' times');
+    count = get_hit_count()
+  res.send('Hello, welcome to my sample node.js app. I have been seen ' + count + ' times');
 });
 
 app.listen(PORT, HOST);
